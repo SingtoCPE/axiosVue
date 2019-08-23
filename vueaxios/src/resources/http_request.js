@@ -1,11 +1,11 @@
 import axios from 'axios'
 
 class HttpRequest {
-  constructor (url = 'https://api.myjson.com/bins/17k39m') {
+  constructor (url = 'https://api.myjson.com/bins/udirz') {
     // this.axios = axios
     this.axiosInstance = axios.create({
       baseURL: url,
-      timeout: 120000
+      
     })
 
     this.axiosInstance.interceptors.request.use(function (config) {
