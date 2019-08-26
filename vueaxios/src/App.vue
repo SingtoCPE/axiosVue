@@ -1,29 +1,25 @@
 <template>
-  <div id="app">
-    <button @click="getUser()">get User from API</button> <br>
-    {{user}}
-  </div>
+  <button @click="makeRequest()">Make Multiple Requests</button>
+
 </template>
 
 <script>
-import {mapActions, mapState} from 'vuex'
+import axios from "axios";
+
+const endpoint = "http://localhost:3000/employee";
+
 export default {
-  name: 'App',
-  components: {
-  },
   methods: {
-    ...mapActions({
-      getUser: 'getUser'
-    })
-  },
-  computed: {
-    ...mapState({
-      user: state => state.user
-    })
+    async makeRequest() {
+      const { data } = await axios.get(`${endpoint}`);
+
+      console.log(data[0]);
+
+    }
   }
-}
+};
 </script>
 
-<style>
 
+<style>
 </style>
