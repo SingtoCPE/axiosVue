@@ -1,6 +1,10 @@
 <template>
-  <button @click="makeRequest()">Make Multiple Requests</button>
-
+<body>
+  <button @click="getEmployee()">Get Employee</button>
+  <ul>
+    <li v-for="item in items" v-bind:key="item.id">{{item}}</li>
+  </ul>
+</body>
 </template>
 
 <script>
@@ -9,12 +13,17 @@ import axios from "axios";
 const endpoint = "http://localhost:3000/employee";
 
 export default {
+  data() {
+    return {
+      items:[]
+    };
+  },
   methods: {
-    async makeRequest() {
+    async getEmployee() {
       const { data } = await axios.get(`${endpoint}`);
+      this.items = [...data]
 
-      console.log(data[0]);
-
+      console.log(data);
     }
   }
 };
