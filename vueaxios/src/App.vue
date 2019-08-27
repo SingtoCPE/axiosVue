@@ -1,38 +1,52 @@
 <template>
 <body>
-  <h1 id="head">Employee Show Data</h1>
+  <h1 id="head">Employee Management</h1>
   <div id="container">
-    <button id="buttonGet" @click="getEmployee()">Get Employee</button>
-    <hr />
-    <table>
-      <tr>
-        <th>ID</th>
-        <th>NAME</th>
-        <th>AGE</th>
-      </tr>
-      <tr div v-for="item in items" v-bind:key="item.id">
-        <td>{{item.id}}</td>
-        <td>{{item.first_name}}</td>
-        <td>{{item.age}}</td>
-        <td>
-          <employee-form @click="deleteEmployee(item.id)" />
-        </td>
-      </tr>
-    </table>
+    <fieldset>
+      <legend>
+        <h1>Employee Add</h1>
+      </legend>
+      <employee-add id="formAdd" />
+    </fieldset>
+
+    <fieldset>
+      <legend>
+        <h1>Employee Table</h1>
+      </legend>
+      <button id="buttonGet" @click="getEmployee()">Get Employee</button>
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>NAME</th>
+          <th>AGE</th>
+        </tr>
+        <tr div v-for="item in items" v-bind:key="item.id">
+          <td>{{item.id}}</td>
+          <td>{{item.first_name}}</td>
+          <td>{{item.age}}</td>
+          <td>
+            <employee-delete @click="deleteEmployee(item.id)" />
+          </td>
+        </tr>
+      </table>
+    </fieldset>
+    
   </div>
 </body>
 </template>
 
 <script>
 import axios from "axios";
-import employeeForm from "@/components/employeeForm.vue";
+import employeeDelete from "@/components/employeeDelete.vue";
+import employeeAdd from "@/components/employeeAdd.vue";
 
 const endpoint = "http://localhost:3000/employee";
 const endpointDelete = "http://localhost:3000/employee/delete";
 
 export default {
   components: {
-    employeeForm
+    employeeDelete,
+    employeeAdd
   },
   data() {
     return {
@@ -46,7 +60,7 @@ export default {
     },
     async deleteEmployee(id) {
       await axios.post(`${endpointDelete}`, { id });
-      this.getEmployee()
+      this.getEmployee();
     }
   }
 };
@@ -70,12 +84,21 @@ th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+h1 {
+  color: rgb(94, 94, 94);
+}
+fieldset {
+  color: rgb(94, 94, 94);
+}
 #head {
   text-align: center;
+  font-size: 60px;
+  color: rgb(167, 29, 29);
+  border: 5px;
 }
 #buttonGet {
   background-color: rgb(24, 218, 127);
-  margin: 10 10 10 700;
+  margin-bottom: 8px;
   color: black;
   padding: 5px 10px;
   text-align: center;
@@ -91,6 +114,10 @@ hr {
   border-style: inset;
   border-width: 1px;
 }
+#formAdd {
+  margin-bottom: 20px;
+}
 #container {
+  margin: 25px 200px 20px 200px;
 }
 </style>
