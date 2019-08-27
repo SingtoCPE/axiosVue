@@ -1,23 +1,21 @@
 <template>
   <div id="employee-form">
-    <button id="buttonDelete" @click="deleteEmployee()">Delete</button>
+    <button id="buttonDelete" v-on="$listeners">Delete</button>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 
-const endpoint = "http://localhost:3000/employee";
+const endpoint = "http://localhost:3000/employee/delete";
 export default {
   name: "employeeForm",
-  methods: {
-    async deleteEmployee(){
-      const { data } = await axios.get(`${endpoint}`);
-      this.items = [...data];
-
-      console.log(data);
+  props: {
+    id: {
+      type: Number,
+      default: null
     }
-  }
+  },
 };
 </script>
 

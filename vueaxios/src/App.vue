@@ -3,7 +3,6 @@
   <h1 id="head">Employee Show Data</h1>
   <div id="container">
     <button id="buttonGet" @click="getEmployee()">Get Employee</button>
-    <employee-form/>
     <hr />
     <table>
       <tr>
@@ -15,6 +14,9 @@
         <td>{{item.id}}</td>
         <td>{{item.first_name}}</td>
         <td>{{item.age}}</td>
+        <td>
+          <employee-form @click="deleteEmployee(item.id)" />
+        </td>
       </tr>
     </table>
   </div>
@@ -26,6 +28,7 @@ import axios from "axios";
 import employeeForm from "@/components/employeeForm.vue";
 
 const endpoint = "http://localhost:3000/employee";
+const endpointDelete = "http://localhost:3000/employee/delete";
 
 export default {
   components: {
@@ -40,8 +43,10 @@ export default {
     async getEmployee() {
       const { data } = await axios.get(`${endpoint}`);
       this.items = [...data];
-
-      console.log(data);
+    },
+    async deleteEmployee(id) {
+      await axios.post(`${endpointDelete}`, { id });
+      this.getEmployee()
     }
   }
 };
