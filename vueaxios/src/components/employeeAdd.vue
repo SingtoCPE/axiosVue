@@ -15,7 +15,7 @@
       placeholder=">>age..."
     />
     &nbsp;
-    <button id="buttonAdd" @click="addEmployee()">Add</button>
+    <button id="buttonAdd" @click="addEmployee()">ADD</button>
   </div>
 </template>
 <script>
@@ -30,7 +30,7 @@ export default {
     };
   },
   methods: {
-    async addEmployee() {
+    addEmployee() {
       this.$emit("child-clickAdd", this.employee.firstName, this.employee.age); // use state
       console.log(this.employee.firstName, this.employee.age);
     },
