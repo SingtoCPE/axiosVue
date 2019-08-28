@@ -1,6 +1,6 @@
 <template>
   <div id="employee-delete">
-    <button id="buttonDelete" v-on="$listeners">Delete</button>
+    <button id="buttonDelete" @click="deleteEmployee(id)">Delete</button>
   </div>
 </template>
 
@@ -16,16 +16,21 @@ export default {
       default: null
     }
   },
+  methods:{
+    deleteEmployee(id) {
+      this.$emit('child-click',id);
+    }
+  }
 };
 </script>
 
 <style scoped>
 #buttonDelete {
-  background-color: rgb(255, 37, 102);
+  background-color: rgb(228, 7, 73);
   margin: 10 10 10 700;
   color: black;
-  padding: 5px 10px;
+  padding: 2px 10px;
   text-align: center;
   font-size: 15px;
-}
+  }
 </style>

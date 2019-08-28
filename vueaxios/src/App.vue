@@ -25,12 +25,11 @@
           <td>{{item.first_name}}</td>
           <td>{{item.age}}</td>
           <td>
-            <employee-delete @click="deleteEmployee(item.id)" />
+            <employee-delete :id="item.id" @child-click="deleteEmployee" />
           </td>
         </tr>
       </table>
     </fieldset>
-    
   </div>
 </body>
 </template>
@@ -59,6 +58,7 @@ export default {
       this.items = [...data];
     },
     async deleteEmployee(id) {
+      console.log(id)
       await axios.post(`${endpointDelete}`, { id });
       this.getEmployee();
     }
@@ -71,21 +71,27 @@ export default {
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
-  width: 30%;
+  width: auto;
 }
 
-td,
-th {
+td {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
 }
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  background-color: rgb(122, 145, 221);
+  color: black;
+}
 
 tr:nth-child(even) {
-  background-color: #dddddd;
+  background-color: rgb(225, 241, 255);
 }
 h1 {
-  color: rgb(94, 94, 94);
+  color: rgb(228, 7, 73);
 }
 fieldset {
   color: rgb(94, 94, 94);
@@ -93,14 +99,14 @@ fieldset {
 #head {
   text-align: center;
   font-size: 60px;
-  color: rgb(167, 29, 29);
+  color: rgb(228, 7, 73);
   border: 5px;
 }
 #buttonGet {
   background-color: rgb(24, 218, 127);
   margin-bottom: 8px;
   color: black;
-  padding: 5px 10px;
+  padding: 2px 10px;
   text-align: center;
   font-size: 15px;
 }
