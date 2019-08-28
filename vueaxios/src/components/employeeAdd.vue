@@ -1,33 +1,44 @@
 <template>
   <div id="employee-add">
     Name:
-    <input type="text" placeholder=">>your name..." />
+    <input
+      :first-name="employee.firstName"
+      v-on:change="inputAddFirstname"
+      type="text"
+      placeholder=">>your name..."
+    />
     Age :
-    <input type="text" placeholder=">>age..." />
+    <input
+      :age="employee.age"
+      v-on:change="inputAddAge"
+      type="text"
+      placeholder=">>age..."
+    />
     &nbsp;
-    <button id="buttonAdd" @click="submitAdd(employee.first_name,employee.age)">Add</button>
+    <button id="buttonAdd" @click="addEmployee()">Add</button>
   </div>
 </template>
 <script>
-import axios from "axios";
-
-const endpointAdd = "http://localhost:3000/employee/add";
-
 export default {
   name: "employeeAdd",
   data() {
     return {
       employee: {
-        first_name: String,
-        default: "",
-        age: Number,
-        default: ""
+        firstName: "",
+        age: null
       }
     };
   },
   methods: {
-    async submitAdd(first_name, age) {
-      await axios.post(`${endpointAdd}`, { first_name, age });
+    async addEmployee() {
+      this.$emit("child-clickAdd", this.employee.firstName, this.employee.age); // use state
+      console.log(this.employee.firstName, this.employee.age);
+    },
+    inputAddFirstname(firstName) {
+      this.employee.firstName = firstName.target.value;  // set state
+    },
+    inputAddAge(age) {
+      this.employee.age = age.target.value; // set state
     }
   }
 };

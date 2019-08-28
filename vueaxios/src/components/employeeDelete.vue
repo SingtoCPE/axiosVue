@@ -5,9 +5,7 @@
 </template>
 
 <script>
-import axios from "axios";
 
-const endpointDelete = "http://localhost:3000/employee/delete";
 export default {
   name: "employeeDelete",
   props: {
@@ -18,7 +16,7 @@ export default {
   },
   methods:{
     deleteEmployee(id) {
-      this.$emit('child-click',id);
+      this.$emit('child-click-delete',id);
     }
   }
 };

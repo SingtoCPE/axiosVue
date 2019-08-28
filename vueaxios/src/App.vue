@@ -6,7 +6,7 @@
       <legend>
         <h1>Employee Add</h1>
       </legend>
-      <employee-add id="formAdd" />
+      <employee-add id="formAdd" @child-clickAdd="addEmployee"/>
     </fieldset>
 
     <fieldset>
@@ -25,7 +25,7 @@
           <td>{{item.first_name}}</td>
           <td>{{item.age}}</td>
           <td>
-            <employee-delete :id="item.id" @child-click="deleteEmployee" />
+            <employee-delete :id="item.id" @child-click-delete="deleteEmployee" />
           </td>
         </tr>
       </table>
@@ -41,6 +41,7 @@ import employeeAdd from "@/components/employeeAdd.vue";
 
 const endpoint = "http://localhost:3000/employee";
 const endpointDelete = "http://localhost:3000/employee/delete";
+const endpointAdd = "http://localhost:3000/employee/add";
 
 export default {
   components: {
@@ -54,7 +55,11 @@ export default {
   },
   methods: {
     async getEmployee() {
-      const { data } = await axios.get(`${endpoint}`);
+      const { data } = 
+      await axios({
+        method: 'get',
+        url: endpoint,
+      })
       this.items = [...data];
     },
     async deleteEmployee(id) {
@@ -67,7 +72,20 @@ export default {
         }
 
       })
-      this.getEmployee();
+      this.addEmployee();
+    },
+    async addEmployee(first_name,age) {
+      console.log(first_name,age)
+      await axios({
+        method: 'post',
+        url: endpointAdd,
+        data:{
+          first_name,
+          age
+        }
+
+      })
+      // this.getEmployee();
     }
   }
 };
