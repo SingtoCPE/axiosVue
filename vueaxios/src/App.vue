@@ -59,7 +59,14 @@ export default {
     },
     async deleteEmployee(id) {
       console.log(id)
-      await axios.post(`${endpointDelete}`, { id });
+      await axios({
+        method: 'post',
+        url: endpointDelete,
+        data:{
+          id
+        }
+
+      })
       this.getEmployee();
     }
   }
