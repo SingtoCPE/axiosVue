@@ -6,7 +6,7 @@
       <legend>
         <h1>Employee Add</h1>
       </legend>
-      <employee-add id="formAdd" @child-clickAdd="addEmployee"/>
+      <employee-add id="formAdd" @child-clickAdd="addEmployee" />
     </fieldset>
 
     <fieldset>
@@ -55,37 +55,34 @@ export default {
   },
   methods: {
     async getEmployee() {
-      const { data } = 
-      await axios({
-        method: 'get',
-        url: endpoint,
-      })
+      const { data } = await axios({
+        method: "get",
+        url: endpoint
+      });
       this.items = [...data];
     },
     async deleteEmployee(id) {
-      console.log(id)
+      console.log({id});
       await axios({
-        method: 'post',
+        method: "post",
         url: endpointDelete,
-        data:{
+        data: {
           id
         }
-
-      })
-      this.addEmployee();
+      });
+      this.getEmployee();
     },
-    async addEmployee(first_name,age) {
-      console.log(first_name,age)
+    async addEmployee(first_name, age) {
+      console.log({first_name, age});
       await axios({
-        method: 'post',
+        method: "post",
         url: endpointAdd,
-        data:{
+        data: {
           first_name,
           age
         }
-
-      })
-      // this.getEmployee();
+      });
+      this.getEmployee();
     }
   }
 };
