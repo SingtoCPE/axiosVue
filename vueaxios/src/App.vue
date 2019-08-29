@@ -62,7 +62,7 @@ export default {
       this.items = [...data];
     },
     async deleteEmployee(id) {
-      console.log({id});
+      console.log('delete',{id});
       await axios({
         method: "post",
         url: endpointDelete,
@@ -73,7 +73,7 @@ export default {
       this.getEmployee();
     },
     async addEmployee(first_name, age) {
-      console.log({first_name, age});
+      console.log('add',{first_name, age});
       await axios({
         method: "post",
         url: endpointAdd,
