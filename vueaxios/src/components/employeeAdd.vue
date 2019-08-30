@@ -16,7 +16,7 @@
     </div>
     <div class="pb-5 margin-test">
       <label>Position: </label>
-      <select id="position" :position="employee.position" v-on:change="inputAddPosition">
+      <select id="position" :value="employee.position" v-on:change="inputAddPosition">
         <option>>>Position...</option>
         <option value="Developer">Developer</option>
         <option value="Employee Management">Employee Management</option>
@@ -30,7 +30,7 @@
       <label for="salary">Salary: </label>
       <input
         id="salary"
-        :salary="employee.salary"
+        :value="employee.salary"
         @change="inputAddSalary"
         type="number"
         placeholder="Salary..."
@@ -54,26 +54,25 @@ export default {
       errors: [],
       employee: {
         firstName: "",
-        age: null,
+        age: 0,
         position: "",
-        salary: null
+        salary: 0
       }
     };
   },
-  methods: {
-    addEmployee() {
-      console.log("aaa");
-      this.$emit(
-        "child-clickAdd",
-        this.employee.firstName,
-        this.employee.age,
-        this.employee.position,
-        this.employee.salary
-      );
-      if (this.complete) {
+  watch: {
+    complete(newValue){
+      if(newValue){
         this.clearForm();
       }
-      console.log(
+    this.$emit("reset-complete",{isReset: false})
+    }
+  },
+  methods: {
+    addEmployee() {
+      
+      this.$emit(
+        "child-clickAdd",
         this.employee.firstName,
         this.employee.age,
         this.employee.position,
@@ -107,7 +106,7 @@ export default {
       this.employee.age = "";
       this.employee.position = "";
       this.employee.salary = "";
-      console.log(this.employee);
+      console.log({employee: this.employee});
     }
   }
 };

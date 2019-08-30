@@ -6,7 +6,12 @@
       <legend>
         <h1>Employee Add</h1>
       </legend>
-      <employee-add id="formAdd" :complete="complete" @child-clickAdd="addEmployee" />
+      <employee-add
+        id="formAdd"
+        :complete="complete"
+        @reset-complete="resetComplete"
+        @child-clickAdd="addEmployee"
+      />
     </fieldset>
 
     <fieldset>
@@ -67,7 +72,6 @@ export default {
       this.items = [...data];
     },
     async deleteEmployee(id) {
-      console.log("delete", { id });
       await axios({
         method: "post",
         url: endpointDelete,
@@ -78,8 +82,7 @@ export default {
       this.getEmployee();
     },
     async addEmployee(first_name, age, position, salary) {
-      console.log("add", { first_name, age, position, salary});
-      await axios({
+      const res = await axios({
         method: "post",
         url: endpointAdd,
         data: {
@@ -89,9 +92,13 @@ export default {
           salary
         }
       });
-      this.getEmployee();
-      this.complete = true;
-       
+      if (res.data) {
+        this.complete = true;
+        this.getEmployee();
+      }
+    },
+    resetComplete({ isReset }) {
+      this.complete = isReset;
     }
   }
 };
