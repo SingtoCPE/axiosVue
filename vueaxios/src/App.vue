@@ -6,7 +6,7 @@
       <legend>
         <h1>Employee Add</h1>
       </legend>
-      <employee-add id="formAdd" @child-clickAdd="addEmployee" />
+      <employee-add id="formAdd" :complete="complete" @child-clickAdd="addEmployee" />
     </fieldset>
 
     <fieldset>
@@ -54,7 +54,8 @@ export default {
   },
   data() {
     return {
-      items: []
+      items: [],
+      complete: false
     };
   },
   methods: {
@@ -89,6 +90,8 @@ export default {
         }
       });
       this.getEmployee();
+      this.complete = true;
+       
     }
   }
 };
