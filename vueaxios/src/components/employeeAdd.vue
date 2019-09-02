@@ -6,18 +6,20 @@
         <li v-for="(error,index) in errors" :key="index">{{ error }}</li>
       </ul>
     </p>
+
     <div class="pb-5 margin-test">
-      <label for="name">Name: </label>
+      <label for="name">Name:</label>
       <input id="name" v-model="employee.firstName" type="text" placeholder="Your name..." />
     </div>
+
     <div class="pb-5 margin-test">
-      <label for="age">Age: </label>
-      <input id="age" :value="employee.age" @change="inputAddAge" type="text" placeholder="Age..." />
+      <label for="age">Age:</label>
+      <input id="age" v-model="employee.age" type="text" placeholder="Age..." />
     </div>
+
     <div class="pb-5 margin-test">
-      <label>Position: </label>
+      <label>Position:</label>
       <select id="position" :value="employee.position" v-on:change="inputAddPosition">
-        <option>>>Position...</option>
         <option value="Developer">Developer</option>
         <option value="Employee Management">Employee Management</option>
         <option value="Maid">Maid</option>
@@ -26,16 +28,12 @@
         <option value="System Engineering">System Engineering</option>
       </select>
     </div>
+
     <div class="pb-5 margin-test">
-      <label for="salary">Salary: </label>
-      <input
-        id="salary"
-        :value="employee.salary"
-        @change="inputAddSalary"
-        type="number"
-        placeholder="Salary..."
-      />
+      <label for="salary">Salary:</label>
+      <input id="salary" v-model="employee.salary" type="number" placeholder="Salary..." />
     </div>
+
     <button type="submit" id="buttonAdd" @click.prevent="validateForm">ADD</button>
   </form>
 </template>
@@ -54,23 +52,22 @@ export default {
       errors: [],
       employee: {
         firstName: "",
-        age: 0,
+        age: null,
         position: "",
-        salary: 0
+        salary: null
       }
     };
   },
   watch: {
-    complete(newValue){
-      if(newValue){
+    complete(newValue) {
+      if (newValue) {
         this.clearForm();
       }
-    this.$emit("reset-complete",{isReset: false})
+      this.$emit("reset-complete", { isReset: false });
     }
   },
   methods: {
     addEmployee() {
-      
       this.$emit(
         "child-clickAdd",
         this.employee.firstName,
@@ -80,17 +77,16 @@ export default {
       );
     },
 
-    inputAddAge(age) {
-      this.employee.age = age.target.value;
-    },
     inputAddPosition(position) {
       this.employee.position = position.target.value;
     },
-    inputAddSalary(salary) {
-      this.employee.salary = salary.target.value;
-    },
     validateForm() {
-      if (this.employee.firstName && this.employee.age) {
+      if (
+        this.employee.firstName &&
+        this.employee.age &&
+        this.employee.position &&
+        this.employee.salary
+      ) {
         this.addEmployee();
       }
       this.errors = [];
@@ -100,13 +96,19 @@ export default {
       if (!this.employee.age) {
         this.errors.push("Age required.");
       }
+      if (!this.employee.position) {
+        this.errors.push("Position required.");
+      }
+      if (!this.employee.salary) {
+        this.errors.push("Salary required.");
+      }
     },
     clearForm() {
       this.employee.firstName = "";
       this.employee.age = "";
       this.employee.position = "";
       this.employee.salary = "";
-      console.log({employee: this.employee});
+      console.log({ employee: this.employee });
     }
   }
 };
