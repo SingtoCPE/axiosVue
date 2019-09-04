@@ -26,6 +26,7 @@
           <th>AGE</th>
           <th>POSITION</th>
           <th>SALARY</th>
+          <th>PHONE</th>
         </tr>
         <tr div v-for="item in items" v-bind:key="item.id">
           <td>{{item.id}}</td>
@@ -33,6 +34,7 @@
           <td>{{item.age}}</td>
           <td>{{item.position}}</td>
           <td>{{item.salary}}</td>
+          <td>{{item.phone}}</td>
           <td>
             <employee-delete :id="item.id" @child-click-delete="deleteEmployee" />
           </td>
@@ -81,7 +83,7 @@ export default {
       });
       this.getEmployee();
     },
-    async addEmployee(first_name, age, position, salary) {
+    async addEmployee(first_name, age, position, salary, phone) {
       const res = await axios({
         method: "post",
         url: endpointAdd,
@@ -89,7 +91,8 @@ export default {
           first_name,
           age,
           position,
-          salary
+          salary,
+          phone
         }
       });
       if (res.data) {
